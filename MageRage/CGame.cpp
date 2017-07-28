@@ -57,8 +57,8 @@ void CGame::Run()
 
 void CGame::OnLogic()
 {
-	entityManager->updateEntities();
-	physicsManager->updateBodies();
+	entityManager->update();
+	physicsManager->update();
 
 };
 

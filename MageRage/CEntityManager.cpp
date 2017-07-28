@@ -27,3 +27,27 @@ void CEntityManager::renderEntities(sf::RenderWindow * window)
 	}
 }
 
+CEntity* CEntityManager::addEntity(std::string type, sf::Vector2f position)
+{
+	CEntity* entity = new CEntity();
+	for(int i = 0;i< entity_types.size;i++)
+	{
+		if(entity_types[i].type == type)
+		{
+			 entity = entity_types[i];
+		}
+	}
+	entity.setPosition(position);
+	return entity_list.push_back(entity);
+}
+
+void CEntityManager::loadEntityTypes()
+{
+	// read xml to load templates
+	
+}
+
+void CEntityManager::load()
+{
+	loadEntityTypes();
+}

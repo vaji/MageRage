@@ -6,27 +6,33 @@
 #include <string>
 
 
-class CEntity
+class CEntity // parent for Spell, Enemy, Hero
 {
 private:
+	
+	std::string type;
 	
 	sf::Texture *texture;
 	sf::Sprite sprite;
 	CPhysicsBody body;
+	
 
 	void updateAnimation();
 	void updateLogic();
-	
+
 
 public:
 	CAnimator animator;
 
+	CEntity();
 	CEntity(sf::Texture *txt);
 	~CEntity();
 
 	void render(sf::RenderWindow *window);
-	void updatePhysics();
+	
 	void update();
+	
 	void setPosition(sf::Vector2f vec);
+	sf::Vector2f getPosition();
 };
 

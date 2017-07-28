@@ -12,6 +12,11 @@ CEntity::CEntity(sf::Texture *txt)
 CEntity::~CEntity()
 {
 }
+void CEntity::updateAnimation()
+{
+	animator.update();
+	sprite.setTextureRect(animator.getAnimationFrame());
+}
 
 void CEntity::render(sf::RenderWindow *window)
 {
@@ -20,10 +25,22 @@ void CEntity::render(sf::RenderWindow *window)
 
 void CEntity::update()
 {
-	animator.update();
-	sprite.setTextureRect(animator.getAnimationFrame());
+	updateAnimation();
+	updateLogic();
 }
 
 void CEntity::setPosition(sf::Vector2f vec)
 {
+	body.setPosition(vec);
+}
+
+sf::Vector2f CEntity::getPosition()
+{
+	return body.getPosition();
+}
+
+void CEntity::updateLogic()
+{
+	
+	
 }
