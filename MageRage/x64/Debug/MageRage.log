@@ -1,0 +1,13 @@
+﻿  main.cpp
+  CGame.cpp
+  CForce.cpp
+  CEntityManager.cpp
+  Generating Code...
+  Compiling...
+  CEntity.cpp
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  CPhysicsManager.cpp
+  CPhysicsBody.cpp
+  MageRage.vcxproj -> D:\__ENGINEERING__\_programowanie_\MageRage\MageRage\x64\Debug\MageRage.exe
+  MageRage.vcxproj -> D:\__ENGINEERING__\_programowanie_\MageRage\MageRage\x64\Debug\MageRage.pdb (Partial PDB)
