@@ -14,7 +14,7 @@ private:
 	
 	sf::Texture *texture;
 	sf::Sprite sprite;
-	CPhysicsBody body;
+	CPhysicsBody *body;
 	
 
 	void updateAnimation();
@@ -22,6 +22,8 @@ private:
 
 
 public:
+	sf::CircleShape shape;
+	
 	CAnimator animator;
 
 	CEntity();
@@ -33,6 +35,11 @@ public:
 	void update();
 	
 	void setPosition(sf::Vector2f vec);
+
 	sf::Vector2f getPosition();
+	std::string getType();
+	void setBody(CPhysicsBody * bd);
+	CPhysicsBody* CEntity::getBody();
+
 };
 

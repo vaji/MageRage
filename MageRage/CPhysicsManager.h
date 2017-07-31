@@ -6,22 +6,32 @@
 #include "CForce.h"
 #include "CPhysicsBody.h"
 #include "CPhysicsCollision.h"
+#include "CEntity.h"
 
 class CPhysicsManager
 {
 private:
+	std::vector<CPhysicsBody> body_list;
 
 public:
 
-	void AddForce(CPhysicsBody *body, CForce force);
 	
-	void updatePhysics();// 1 - update collision, 2 - update each body (position, forces)
 	
+	// loop
+	void update();// 1 - update collision, 2 - update each body (position, forces)
 	void updateCollisions(); // algorithm for finding collisions (1st step)
 	void updateBodies();  // (2nd step)
 	
+	// methods
+	void addForce(CPhysicsBody *& body, CForce force);
+	void addForce(CPhysicsBody *& body, sf::Vector2f vec);
+	void addForce(CEntity &entity, sf::Vector2f vec);
+	CPhysicsBody * registerNewBody(); // this is called by entity manager when entity is created (with body)
+										// entity has only pointer to its body which is set on object created by physics manager 
+										// body is stored in 'vector' in physics manager and pointer is returned for entity 
+
 	
-	
+	// collision
 	std::vector<CPhysicsBody>  getNarrowCollisionGroup(CPhysicsBody *body); // find nearest bodies, basing on distance
 	CPhysicsCollision getCollision(CPhysicsBody *body); // check if body can move in directions
 	void Collide(CPhysicsBody *body); // handle collision - alter forces on body

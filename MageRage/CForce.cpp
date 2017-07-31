@@ -1,5 +1,6 @@
 #include "CForce.h"
-
+#include <cmath>
+#include <iostream>
 CForce::CForce()
 {
 	x = 0;
@@ -37,15 +38,19 @@ CForce::~CForce()
 
 void CForce::update()
 {
+
 	if(!finished && !muted) {
 		if(impulse)
 		{
-			x = initial_x * ((1 / (power(t,2)) + 1.1);
-			y = initial_y * ((1 / (power(t,2)) + 1.1);
+			x = initial_x * ((1 / (pow(time_left,2)) + 1.1));
+			y = initial_y * ((1 / (pow(time_left,2)) + 1.1));
 		}
 		
-		if(time_left < total_time) time_left--;
-		else finished = true; //ready to be removed by manager
+		if(total_time != 0)
+		{ 
+			if(time_left < total_time) time_left--;
+			else finished = true; //ready to be removed by manager
+		}
 	}
 }
 
@@ -62,4 +67,9 @@ bool CForce::isImpulse()
 float CForce::getTime()
 {
 	return time_left;
+}
+
+bool CForce::isFinished()
+{
+	return finished;
 }

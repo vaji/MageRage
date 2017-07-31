@@ -4,6 +4,7 @@
 
 CAnimation::CAnimation()
 {
+	started = false;
 }
 
 CAnimation::CAnimation(std::string n, sf::IntRect initial_rect, int frames)

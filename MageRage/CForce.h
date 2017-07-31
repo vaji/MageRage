@@ -29,6 +29,7 @@ public:
 	void mute();
 	bool isImpulse();
 	float getTime();
+	bool isFinished();
 	
 	void update(); // updates time and magnitude (vector)
 	

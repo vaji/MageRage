@@ -1,5 +1,5 @@
 #include "CEntityManager.h"
-
+#include <iostream>
 
 
 CEntityManager::CEntityManager()
@@ -11,36 +11,83 @@ CEntityManager::~CEntityManager()
 {
 }
 
+void CEntityManager::setPhysicsManagerHandler(CPhysicsManager * manager)
+{
+	physicsManagerHandler = manager;
+}
+
+// ***************************************************************************************
+// LOOP
+
+void CEntityManager::update()
+{
+	updateEntities();
+}
+
+
 void CEntityManager::updateEntities()
 {
-	for each (CEntity entity in entity_list)
+	for (int i = 0; i < entity_list.size();i++)
 	{
-		entity.update();
+		
+		entity_list.at(i).update();
 	}
 }
 
 void CEntityManager::renderEntities(sf::RenderWindow * window)
 {
-	for each (CEntity entity in entity_list)
+	for (int i = 0; i < entity_list.size(); i++)
 	{
-		entity.render(window);
+		entity_list.at(i).render(window);
 	}
 }
 
-CEntity* CEntityManager::addEntity(std::string type, sf::Vector2f position)
+
+// ***************************************************************************************
+// HANDLING ENTITIES
+CEntity* CEntityManager::addEntity(std::string type, sf::Vector2f position, bool gravity)
 {
-	CEntity* entity = new CEntity();
-	for(int i = 0;i< entity_types.size;i++)
+	system("cls");
+	CEntity entity;
+	entity_list.push_back(entity);
+	entity_list.back().setBody(physicsManagerHandler->registerNewBody());
+
+	entity_list.back().shape = sf::CircleShape(50);
+	entity_list.back().setPosition(position);
+	
+	
+	std::cout << "na liscie ENTITY mam teraz " << entity_list.size() << std::endl;
+
+	physicsManagerHandler->addForce(entity_list.back(), sf::Vector2f(0, 3));
+
+
+	return &entity_list.back();
+}
+
+void CEntityManager::removeEntity(CEntity * entity)
+{
+}
+
+
+CEntity* CEntityManager::createEntityByType(std::string type, sf::Vector2f position)
+{
+	CEntity entity;
+	for (int i = 0; i< entity_types.size(); i++)
 	{
-		if(entity_types[i].type == type)
+		if (entity_types[i].getType() == type)
 		{
-			 entity = entity_types[i];
+			entity = entity_types[i];
 		}
 	}
 	entity.setPosition(position);
-	return entity_list.push_back(entity);
+	entity_list.push_back(entity);
+	return &entity_list.back();
 }
 
+
+
+// ***************************************************************************************
+// LOADING
 void CEntityManager::loadEntityTypes()
 {
 	// read xml to load templates
@@ -51,3 +98,4 @@ void CEntityManager::load()
 {
 	loadEntityTypes();
 }
+

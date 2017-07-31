@@ -1,5 +1,6 @@
 #include "CGame.h"
 
+#include <iostream>
 CGame::CGame()
 {
 	running = true;
@@ -11,10 +12,13 @@ int CGame::Init()
 {
 	window = new sf::RenderWindow(sf::VideoMode(800, 600), "My window");
 	window->setVerticalSyncEnabled(true);
-
+	
 	physicsManager = new CPhysicsManager();
 	entityManager = new CEntityManager();
 	textureManager = new CTextureManager();
+
+	entityManager->setPhysicsManagerHandler(physicsManager);
+
 
 	return 1;
 };
@@ -26,6 +30,14 @@ void CGame::OnEvent()
 	{
 		if (event.type == sf::Event::Closed)
 			close = false;
+
+		if (event.type == sf::Event::MouseButtonPressed)
+		{
+			std::cout << "nowy obiekt";
+			entityManager->addEntity("elo", getMousePosition());
+			std::cout << " PO DODANIU FORCE W CGAME: " << entityManager->entity_list.back().getBody()->force_list.size() << std::endl;
+		}
+			
 	}
 };
 
@@ -45,11 +57,9 @@ void CGame::Run()
 {
 	while(!close)
 	{
-	OnEvent();
-	OnLogic();
-	OnRender();
-
-	
+		OnEvent();
+		OnLogic();
+		OnRender();
 	}
 
 	Close();
@@ -59,7 +69,6 @@ void CGame::OnLogic()
 {
 	entityManager->update();
 	physicsManager->update();
-
 };
 
 int CGame::Load()
@@ -69,3 +78,12 @@ int CGame::Load()
 
 void CGame::Close()
 {};
+
+
+sf::Vector2f CGame::getMousePosition()
+{
+	sf::Vector2f vec = sf::Vector2f(sf::Mouse::getPosition().x - window->getPosition().x, sf::Mouse::getPosition().y - window->getPosition().y);
+	return vec;
+
+
+}

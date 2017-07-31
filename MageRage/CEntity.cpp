@@ -1,6 +1,11 @@
 #include "CEntity.h"
 
+#include <iostream>
 
+CEntity::CEntity()
+{
+	if(body != NULL) body->name = "eloBODY";
+}
 
 CEntity::CEntity(sf::Texture *txt)
 {
@@ -20,27 +25,51 @@ void CEntity::updateAnimation()
 
 void CEntity::render(sf::RenderWindow *window)
 {
-	window->draw(sprite);
+	// window->draw(sprite);
+	//shape.setPosition(body.getPosition());
+
+	window->draw(shape);
+
 }
 
 void CEntity::update()
 {
-	updateAnimation();
-	updateLogic();
+	//updateAnimation();
+	//updateLogic();
+	shape.setPosition(body->getPosition());
+
 }
 
 void CEntity::setPosition(sf::Vector2f vec)
 {
-	body.setPosition(vec);
+	body->setPosition(vec);
+	shape.setPosition(vec);
 }
 
 sf::Vector2f CEntity::getPosition()
 {
-	return body.getPosition();
+	return body->getPosition();
 }
 
 void CEntity::updateLogic()
 {
 	
 	
+}
+
+std::string CEntity::getType()
+{
+	return type;
+}
+
+
+void CEntity::setBody(CPhysicsBody * bd)
+{
+	body = bd;
+}
+
+
+CPhysicsBody* CEntity::getBody()
+{
+	return body;
 }

@@ -26,7 +26,7 @@ int CAnimator::addAnimation(std::string name, int x, int y, int w, int h, int fr
 
 void CAnimator::setAnimation(std::string name, bool reset)
 {
-	anim->stop();
+	if (anim != NULL)  anim->stop();
 
 
 	for (int i = 0; i < anim_list.size(); i++)
@@ -44,20 +44,24 @@ void CAnimator::setAnimation(std::string name, bool reset)
 
 void CAnimator::resetAnimation()
 {
-	anim->reset();
+	if (anim != NULL) anim->reset();
 }
 
 void CAnimator::update()
 {
-	anim->update();
+	if(anim != NULL) anim->update();
 }
 
 sf::IntRect CAnimator::getAnimationFrame()
 {
-	return anim->getFrame();
+	if (anim != NULL)
+		return anim->getFrame();
+	else return sf::IntRect(0, 0, 0, 0);
 }
 
 std::string CAnimator::getCurrentAnimation()
 {
-	return anim->name;
+	if (anim != NULL)
+		return anim->name;
+	else return "";
 }

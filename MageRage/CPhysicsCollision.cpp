@@ -60,7 +60,7 @@ CPhysicsCollision::~CPhysicsCollision()
 {
 }
 
-std::vector<CPhysicsBody> CPhysicsCollision::getBodies()
+std::vector<CPhysicsBody *> CPhysicsCollision::getBodies()
 {
 	return bodies;
 }

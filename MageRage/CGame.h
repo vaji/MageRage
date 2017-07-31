@@ -4,7 +4,7 @@
 #include "CPhysicsManager.h"
 #include "CEntityManager.h"
 #include "CTextureManager.h"
-
+#include <SFML/System.hpp>
 class CGame
 {
 private:
@@ -18,6 +18,8 @@ private:
 	void OnLogic();
 	void OnRender();
 	void Close(); // called by exit
+
+	sf::Vector2f getMousePosition();
 
 
 	bool running;
