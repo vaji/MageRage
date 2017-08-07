@@ -12,10 +12,12 @@ private:
 	CEntityManager *entityManager;
 	CTextureManager *textureManager;
 
+	float FPS;
 	
+	sf::Clock fps_clock;
 
 	int Load(); // called by init
-
+	bool mouse;
 	void OnEvent(); // 3 main funcs in da loop
 	void OnLogic();
 	void OnRender();

@@ -23,6 +23,10 @@ void CEntityManager::setPhysicsManagerHandler(CPhysicsManager * manager)
 	physicsManagerHandler = manager;
 }
 
+void CEntityManager::setTextureManagerHandler(CTextureManager * manager)
+{
+	textureManagerHandler = manager;
+}
 // ***************************************************************************************
 // LOOP
 
@@ -34,15 +38,12 @@ void CEntityManager::update()
 
 void CEntityManager::updateEntities()
 {
-//	system("cls");
 	for (int i = 0; i < entity_list.size();i++)
 	{
 		entity_list.at(i).setPosition(physicsManagerHandler->getBodyPosition(entity_list.at(i).getID()));
 		entity_list.at(i).update();
 
 		if (entity_list.at(i).getPosition().y > world_size.y) removeEntity(entity_list.at(i).getID());
-	//	std::cout << "POZYCJA ENTITY NR " << i << " to [" << physicsManagerHandler->getBodyPosition(entity_list.at(i).getID()).x << " , " << physicsManagerHandler->getBodyPosition(entity_list.at(i).getID()).y << std::endl;
-	//	std::cout << "ID ENTITY " << i << entity_list.at(i).getID() << " , PHYSICS ENTITY" << physicsManagerHandler->getBodyHandler(entity_list.at(i).getID())->getID() << std::endl;
 	}
 }
 
@@ -60,12 +61,13 @@ void CEntityManager::renderEntities(sf::RenderWindow * window)
 CEntity* CEntityManager::addEntity(std::string type, sf::Vector2f position, bool gravity)
 {
 	//system("cls");
-	CEntity entity(next_id);
-	entity_list.push_back(entity);
 
-	entity_list.back().shape = sf::CircleShape(25);
+	// by type
+	createEntityByType(type);
+	entity_list.back().setID(next_id);
 	entity_list.back().setPosition(position);
-	
+
+	// physics part of entity creation
 	physicsManagerHandler->registerNewBody(next_id);
 	physicsManagerHandler->getBodyHandler(next_id)->setPosition(position);
 	physicsManagerHandler->addForce(entity_list.back(), sf::Vector2f(0, 3));
@@ -93,8 +95,8 @@ void CEntityManager::removeEntity(int idd)
 	}
 }
 
-
-CEntity* CEntityManager::createEntityByType(std::string type, sf::Vector2f position)
+// CREATES ENTITY FROM TEMPLATE AND REGISTERS IT IN LIST
+void CEntityManager::createEntityByType(std::string type)
 {
 	CEntity entity;
 	for (int i = 0; i< entity_types.size(); i++)
@@ -104,9 +106,12 @@ CEntity* CEntityManager::createEntityByType(std::string type, sf::Vector2f posit
 			entity = entity_types[i];
 		}
 	}
-	entity.setPosition(position);
-	entity_list.push_back(entity);
-	return &entity_list.back();
+	if (type == "bandit") {
+		entity.animator.addAnimation("run", 0, 160, 80, 80, 3);
+			entity.animator.setAnimation("run", true);
+	}
+	entity_list.push_back(entity); // register
+
 }
 
 
@@ -117,11 +122,24 @@ void CEntityManager::loadEntityTypes()
 {
 	// read xml to load templates
 	
+
+	CEntity ent(-1, textureManagerHandler->getTexture(0));
+	ent.setType("bandit");
+	
+	//ent.animator.setAnimation("run",false);
+	entity_types.push_back(ent);
+
+
+	CEntity ent2 = CEntity(-1);
+	ent2.setType("circle");
+	entity_types.push_back(ent2);
+
 }
 
 void CEntityManager::load()
 {
 	loadEntityTypes();
 }
+
 
 

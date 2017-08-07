@@ -5,22 +5,26 @@ CGame::CGame()
 {
 	WINDOW_HEIGHT = 640;
 	WINDOW_WIDTH = 860;
+	FPS = 24;
 	running = true;
 	close = false;
-
+	mouse = false;
+	
 };
 
 int CGame::Init()
 {
 	window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "MageRage2D");
-	window->setVerticalSyncEnabled(true); 
+	window->setVerticalSyncEnabled(true);
 	
 	physicsManager = new CPhysicsManager();
 	entityManager = new CEntityManager(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
 	textureManager = new CTextureManager();
 
 	entityManager->setPhysicsManagerHandler(physicsManager);
-
+	entityManager->setTextureManagerHandler(textureManager);
+	fps_clock.restart();
+	Load();
 
 	return 1;
 };
@@ -35,8 +39,8 @@ void CGame::OnEvent()
 
 		if (event.type == sf::Event::MouseButtonPressed)
 		{
-			
-			entityManager->addEntity("object", getMousePosition());
+			mouse = true;
+			entityManager->addEntity("bandit", getMousePosition());
 		}
 			
 	}
@@ -58,9 +62,13 @@ void CGame::Run()
 {
 	while(!close)
 	{
+		mouse = false;
 		OnEvent();
 		OnLogic();
 		OnRender();
+		sf::sleep(sf::milliseconds(((1 / FPS) * 1000) - fps_clock.getElapsedTime().asMilliseconds()));
+		if(mouse) entityManager->addEntity("bandit", getMousePosition());
+		fps_clock.restart();
 	}
 
 	Close();
@@ -74,6 +82,9 @@ void CGame::OnLogic()
 
 int CGame::Load()
 {
+	textureManager->load();
+	entityManager->load();
+
 	return 1;
 };
 

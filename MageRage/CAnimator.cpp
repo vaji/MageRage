@@ -11,7 +11,7 @@ CAnimator::~CAnimator()
 
 }
 
-int CAnimator::addAnimation(std::string name, int x, int y, int w, int h, int frames)
+int CAnimator::addAnimation(std::string name, int x, int y, int w, int h, int frames, bool rev)
 {
 	sf::IntRect rect;
 	rect.top = y;
@@ -19,15 +19,14 @@ int CAnimator::addAnimation(std::string name, int x, int y, int w, int h, int fr
 	rect.height = h;
 	rect.width = w;
 
-	anim_list.push_back(CAnimation(name, rect, frames));
+	anim_list.push_back(CAnimation(name, rect, frames,rev));
 
 	return 1;
 }
 
 void CAnimator::setAnimation(std::string name, bool reset)
 {
-	if (anim != NULL)  anim->stop();
-
+	anim_list[current_animation_index].stop();
 
 	for (int i = 0; i < anim_list.size(); i++)
 	{
@@ -37,31 +36,27 @@ void CAnimator::setAnimation(std::string name, bool reset)
 			break;
 		}
 	}
-	anim = &anim_list[current_animation_index];
-	if (reset) anim->reset();
-	anim->start();
+	anim_list[current_animation_index];
+	if (reset) anim_list[current_animation_index].reset();
+	anim_list[current_animation_index].start();
 }
 
 void CAnimator::resetAnimation()
 {
-	if (anim != NULL) anim->reset();
+	anim_list[current_animation_index].reset();
 }
 
 void CAnimator::update()
 {
-	if(anim != NULL) anim->update();
+	anim_list[current_animation_index].update();
 }
 
 sf::IntRect CAnimator::getAnimationFrame()
 {
-	if (anim != NULL)
-		return anim->getFrame();
-	else return sf::IntRect(0, 0, 0, 0);
+	return anim_list[current_animation_index].getFrame();
 }
 
 std::string CAnimator::getCurrentAnimation()
 {
-	if (anim != NULL)
-		return anim->name;
-	else return "";
+	return anim_list[current_animation_index].name;
 }

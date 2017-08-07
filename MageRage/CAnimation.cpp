@@ -1,14 +1,17 @@
 #include "CAnimation.h"
-
+#include <iostream>
 
 
 CAnimation::CAnimation()
 {
 	started = false;
+	dir = 1;
+
 }
 
-CAnimation::CAnimation(std::string n, sf::IntRect initial_rect, int frames)
+CAnimation::CAnimation(std::string n, sf::IntRect initial_rect, int frames, bool rev)
 {
+	reverse = rev;
 	name = n;
 	initial_frame = initial_rect;
 	total_frames = frames;
@@ -28,14 +31,31 @@ void CAnimation::update()
 {
 	if (started)
 	{
-		if (current_frame < total_frames) //  frame starts from 0
+		if(!reverse) 
 		{
-			current_frame++;
+			if (current_frame < total_frames - 1) //  frame starts from 0
+			{
+				current_frame++;
+			}
+			else
+			{
+				current_frame = 0;
+			}
 		}
 		else
 		{
-			current_frame = 0;
+			if (current_frame < total_frames - 1 && current_frame >= 0) //  frame starts from 0
+			{
+				current_frame += dir;
+			}
+			else
+			{
+				if(dir == 1) dir = -1;
+				else dir = 1;
+				current_frame += dir;
+			}
 		}
+		
 	}
 }
 
@@ -53,11 +73,10 @@ void CAnimation::start()
 sf::IntRect CAnimation::getFrame()
 {
 	sf::IntRect rect;
-
+	
 	rect = initial_frame;
 	rect.left += rect.width * current_frame;
-	rect.top += rect.height * current_frame;
-
+//	std::cout << "frame: " << rect.left << " " << rect.top << " " << rect.width << " " << rect.height << std::endl;
 	return rect;
 }
 

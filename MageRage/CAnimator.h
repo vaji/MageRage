@@ -18,7 +18,7 @@ public:
 	CAnimator();
 	~CAnimator();
 
-	int addAnimation(std::string name, int x, int y, int w, int h, int frames);
+	int addAnimation(std::string name, int x, int y, int w, int h, int frames, bool rev = false);
 	void setAnimation(std::string name, bool reset);
 	void resetAnimation();
 	void update();

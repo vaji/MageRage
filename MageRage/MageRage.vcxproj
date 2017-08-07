@@ -133,6 +133,7 @@
     <ClCompile Include="CPhysicsBody.cpp" />
     <ClCompile Include="CPhysicsCollision.cpp" />
     <ClCompile Include="CPhysicsManager.cpp" />
+    <ClCompile Include="CTexture.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="CEntity.cpp" />
     <ClCompile Include="CTextureManager.cpp" />
@@ -147,6 +148,7 @@
     <ClInclude Include="CPhysicsCollision.h" />
     <ClInclude Include="CPhysicsManager.h" />
     <ClInclude Include="CEntity.h" />
+    <ClInclude Include="CTexture.h" />
     <ClInclude Include="CTextureManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

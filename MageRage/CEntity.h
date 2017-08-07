@@ -19,6 +19,8 @@ private:
 	void updateAnimation();
 	void updateLogic();
 
+	bool is_animated;
+
 
 public:
 	sf::CircleShape shape;
@@ -26,8 +28,8 @@ public:
 	CAnimator animator;
 
 	CEntity();
-	CEntity(int idd);
-	CEntity(sf::Texture *txt);
+	CEntity(int idd, bool animated = false);
+	CEntity(int idd, sf::Texture *txt, bool animated = true);
 	~CEntity();
 
 	void render(sf::RenderWindow *window);
@@ -37,7 +39,9 @@ public:
 	void setPosition(sf::Vector2f vec);
 
 	sf::Vector2f getPosition();
+	void setType(std::string new_type);
 	std::string getType();
+	void setID(int idd);
 	int getID();
 
 };

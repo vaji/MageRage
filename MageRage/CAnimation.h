@@ -7,6 +7,8 @@ class CAnimation
 private:
 	
 	bool started;
+	bool reverse;
+	int dir;
 	int current_frame;
 	int total_frames;
 	sf::IntRect initial_frame;
@@ -14,7 +16,7 @@ private:
 public:
 	std::string name;
 	CAnimation();
-	CAnimation(std::string n, sf::IntRect initial_rect, int frames);
+	CAnimation(std::string n, sf::IntRect initial_rect, int frames, bool reverse = false);
 	~CAnimation();
 
 	void reset();

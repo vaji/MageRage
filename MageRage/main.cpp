@@ -20,6 +20,6 @@ int main()
 void init()
 {
 	gameObject = CGame();
-	textureManager = CTextureManager();
+	
 }
 
