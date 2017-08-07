@@ -26,7 +26,10 @@ public:
 	void addForce(CPhysicsBody *& body, CForce force);
 	void addForce(CPhysicsBody *& body, sf::Vector2f vec);
 	void addForce(CEntity &entity, sf::Vector2f vec);
-	CPhysicsBody * registerNewBody(); // this is called by entity manager when entity is created (with body)
+	void registerNewBody(int idd); // this is called by entity manager when entity is created (with body)
+	void removeBody(int idd);
+	CPhysicsBody * getBodyHandler(int idd);
+	sf::Vector2f getBodyPosition(int idd);
 										// entity has only pointer to its body which is set on object created by physics manager 
 										// body is stored in 'vector' in physics manager and pointer is returned for entity 
 

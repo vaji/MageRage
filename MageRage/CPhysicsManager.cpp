@@ -38,8 +38,9 @@ void CPhysicsManager::updateBodies()
 	// move bodies, remove forces
 	for (int i = 0; i < body_list.size();i++)
 	{
-		body_list.at(i).updatePosition();
-		body_list.at(i).updateForces();
+		body_list.at(i).setPosition(body_list.at(i).getPosition() + sf::Vector2f(0, 3));
+		//body_list.at(i).updatePosition();
+		//body_list.at(i).updateForces();
 		
 	}
 }
@@ -47,15 +48,44 @@ void CPhysicsManager::updateBodies()
 
 // *****************************************************************************************************************
 // HANDLING
-CPhysicsBody* CPhysicsManager::registerNewBody()
+void CPhysicsManager::registerNewBody(int idd)
 {
-	
-
-	CPhysicsBody body;
+	CPhysicsBody body(idd);
 	body_list.push_back(body);
-	std::cout << "na liscie PHYSICS mam teraz " << body_list.size() << std::endl;
-	return &body_list.back();
-	//body_list.back()->name = "ELO POWINNO BYC TO SAMO";
+}
+
+void CPhysicsManager::removeBody(int idd)
+{
+	for (int i = 0; i < body_list.size(); i++)
+	{
+		if (body_list.at(i).getID() == idd)
+		{
+			body_list.erase(body_list.begin() + i);
+		}
+	}
+}
+
+CPhysicsBody * CPhysicsManager::getBodyHandler(int idd)
+{
+	for (int i = 0; i < body_list.size(); i++)
+	{
+		if (body_list.at(i).getID() == idd)
+		{
+			return &body_list.at(i);
+		}
+	}
+}
+
+sf::Vector2f CPhysicsManager::getBodyPosition(int idd)
+{
+	for (int i = 0; i < body_list.size(); i++)
+	{
+		if (body_list.at(i).getID() == idd)
+		{
+			return body_list.at(i).getPosition();
+		}
+	}
+	return sf::Vector2f(0, 0);
 }
 
 
@@ -93,5 +123,12 @@ void CPhysicsManager::addForce(CPhysicsBody *& body, sf::Vector2f vec)
 
 void CPhysicsManager::addForce(CEntity &entity, sf::Vector2f vec)
 {
-	entity.getBody()->addForce(vec);
+	int idd = entity.getID();
+	for (int i = 0; i < body_list.size(); i++)
+	{
+		if (body_list.at(i).getID() == idd)
+		{
+			return body_list.at(i).addForce(vec);
+		}
+	}
 }

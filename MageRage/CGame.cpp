@@ -3,6 +3,8 @@
 #include <iostream>
 CGame::CGame()
 {
+	WINDOW_HEIGHT = 640;
+	WINDOW_WIDTH = 860;
 	running = true;
 	close = false;
 
@@ -10,11 +12,11 @@ CGame::CGame()
 
 int CGame::Init()
 {
-	window = new sf::RenderWindow(sf::VideoMode(800, 600), "My window");
-	window->setVerticalSyncEnabled(true);
+	window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "MageRage2D");
+	window->setVerticalSyncEnabled(true); 
 	
 	physicsManager = new CPhysicsManager();
-	entityManager = new CEntityManager();
+	entityManager = new CEntityManager(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
 	textureManager = new CTextureManager();
 
 	entityManager->setPhysicsManagerHandler(physicsManager);
@@ -33,9 +35,8 @@ void CGame::OnEvent()
 
 		if (event.type == sf::Event::MouseButtonPressed)
 		{
-			std::cout << "nowy obiekt";
-			entityManager->addEntity("elo", getMousePosition());
-			std::cout << " PO DODANIU FORCE W CGAME: " << entityManager->entity_list.back().getBody()->force_list.size() << std::endl;
+			
+			entityManager->addEntity("object", getMousePosition());
 		}
 			
 	}
@@ -67,8 +68,8 @@ void CGame::Run()
 
 void CGame::OnLogic()
 {
-	entityManager->update();
 	physicsManager->update();
+	entityManager->update();
 };
 
 int CGame::Load()

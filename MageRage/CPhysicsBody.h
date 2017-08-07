@@ -9,7 +9,7 @@ class CPhysicsBody
 private:
 
 	sf::Vector2f position;	
-	
+	int ID;
 	
 public:
 	std::string name;
@@ -29,10 +29,11 @@ public:
 	// GET
 	CForce getResultantForce();
 	sf::Vector2f getPosition();
-	
+	int getID();
 	
 	
 	CPhysicsBody();
+	CPhysicsBody(int idd);
 	~CPhysicsBody();
 };
 

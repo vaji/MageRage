@@ -11,11 +11,10 @@ class CEntity // parent for Spell, Enemy, Hero
 private:
 	
 	std::string type;
-	
 	sf::Texture *texture;
 	sf::Sprite sprite;
-	CPhysicsBody *body;
-	
+
+	int ID;
 
 	void updateAnimation();
 	void updateLogic();
@@ -27,6 +26,7 @@ public:
 	CAnimator animator;
 
 	CEntity();
+	CEntity(int idd);
 	CEntity(sf::Texture *txt);
 	~CEntity();
 
@@ -38,8 +38,7 @@ public:
 
 	sf::Vector2f getPosition();
 	std::string getType();
-	void setBody(CPhysicsBody * bd);
-	CPhysicsBody* CEntity::getBody();
+	int getID();
 
 };
 

@@ -7,6 +7,11 @@ CPhysicsBody::CPhysicsBody()
 	
 }
 
+CPhysicsBody::CPhysicsBody(int idd)
+{
+	ID = idd;
+}
+
 
 CPhysicsBody::~CPhysicsBody()
 {
@@ -32,6 +37,11 @@ CForce CPhysicsBody::getResultantForce()
 sf::Vector2f CPhysicsBody::getPosition()
 {
 	return position;
+}
+
+int CPhysicsBody::getID()
+{
+	return ID;
 }
 
 void CPhysicsBody::updatePosition()

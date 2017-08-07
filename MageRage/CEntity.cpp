@@ -4,7 +4,12 @@
 
 CEntity::CEntity()
 {
-	if(body != NULL) body->name = "eloBODY";
+
+}
+
+CEntity::CEntity(int idd)
+{
+	ID = idd;
 }
 
 CEntity::CEntity(sf::Texture *txt)
@@ -25,8 +30,7 @@ void CEntity::updateAnimation()
 
 void CEntity::render(sf::RenderWindow *window)
 {
-	// window->draw(sprite);
-	//shape.setPosition(body.getPosition());
+	 window->draw(sprite);
 
 	window->draw(shape);
 
@@ -36,19 +40,16 @@ void CEntity::update()
 {
 	//updateAnimation();
 	//updateLogic();
-	shape.setPosition(body->getPosition());
-
 }
 
 void CEntity::setPosition(sf::Vector2f vec)
 {
-	body->setPosition(vec);
 	shape.setPosition(vec);
 }
 
 sf::Vector2f CEntity::getPosition()
 {
-	return body->getPosition();
+	return shape.getPosition();
 }
 
 void CEntity::updateLogic()
@@ -62,14 +63,7 @@ std::string CEntity::getType()
 	return type;
 }
 
-
-void CEntity::setBody(CPhysicsBody * bd)
+int CEntity::getID()
 {
-	body = bd;
-}
-
-
-CPhysicsBody* CEntity::getBody()
-{
-	return body;
+	return ID;
 }

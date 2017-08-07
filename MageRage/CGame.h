@@ -12,6 +12,8 @@ private:
 	CEntityManager *entityManager;
 	CTextureManager *textureManager;
 
+	
+
 	int Load(); // called by init
 
 	void OnEvent(); // 3 main funcs in da loop
@@ -26,6 +28,9 @@ private:
 	bool close;
 
 public:
+
+	int WINDOW_HEIGHT;
+	int WINDOW_WIDTH;
 	sf::RenderWindow* window;
 
 	CGame();
